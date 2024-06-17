@@ -6,11 +6,11 @@ class HelloWorld
         string[] array = new string[9];
         string[] numbs = new string[9] {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
         
-        Console.WriteLine($"0\t|1\t|2\t");
+        Console.WriteLine($"1\t|2\t|3\t");
         Console.WriteLine("-------------------------");
-        Console.WriteLine($"3\t|4\t|5\t");
+        Console.WriteLine($"4\t|5\t|6\t");
         Console.WriteLine("-------------------------");
-        Console.WriteLine($"6\t|7\t|8\t");
+        Console.WriteLine($"7\t|8\t|9\t");
         
         Random rnd = new Random();
         int step = 1;
@@ -18,10 +18,13 @@ class HelloWorld
         string compAnswer = "X";
         Console.WriteLine("Кто ты? 0 или Х?");
         string whoanswer = Console.ReadLine();
-        while(whoanswer != "X" || whoanswer != "0" || whoanswer != "x")
+        while (true)
             {
-                Console.WriteLine("Простите, но этот символ я не понимаю. Кто вы? 0 или Х?");
+                if (whoanswer != "X" || whoanswer != "0" || whoanswer != "x")
+                    break;
+                Console.WriteLine("Простите, я не понимаю. Кто вы? 0 или Х?");
                 whoanswer = Console.ReadLine();
+                // Console.WriteLine(whoanswer);
             }
         if (whoanswer != "0")
         {
@@ -114,13 +117,22 @@ class HelloWorld
     
     public static int PersTurn(string[] array, string[] numbs, string compAnswer, string myAnswer)
     {
-        Console.WriteLine("\nКуда ставим?");                                    
-        int myTurn = int.Parse(Console.ReadLine());
-        while (myTurn >= 10)
-            myTurn = int.Parse(Console.ReadLine());
-            
-        while(array[myTurn-1] == compAnswer || array[myTurn-1] == myAnswer)
-            myTurn = int.Parse(Console.ReadLine());
+        Console.WriteLine("\nКуда ставим?");     
+        int myTurn;
+        bool myTurnBool;
+        while (true)
+        {
+            Console.WriteLine("Введите свободное число от 1 до 9");
+            myTurnBool = int.TryParse(Console.ReadLine(), out myTurn);
+            if (myTurnBool == false)
+                continue;
+            else if (myTurn > 9 || myTurn < 1)
+                continue;
+            else if (array[myTurn-1] == compAnswer || array[myTurn-1] == myAnswer)
+            continue;
+            else
+                break;
+        }
         array[myTurn-1] = myAnswer;
         numbs[myTurn-1] = "";
         if (array[0] == array[1] && array[1] == array[2] && array[0] == myAnswer ||
